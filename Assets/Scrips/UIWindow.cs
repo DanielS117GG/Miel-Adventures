@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using NaughtyAttributes;
+using System;
 public class UIWindow : MonoBehaviour
 
 
@@ -14,9 +15,19 @@ public class UIWindow : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
 
     [SerializeField] private bool _hideOnStart;
+
     [Header("  Animation Settings ")]
     [SerializeField] private float showDuration = 0.5f; 
     [SerializeField] private float hideDuration = 0.5f;
+
+    [SerializeField] private Ease showEase = Ease.OutBack;
+    [SerializeField] private Ease hideEase = Ease.InBack;
+
+    public CanvasGroup CanvasGroup => _canvasGroup;
+
+    public RectTransform CanvasRectTransform => _canvasRecTransform;
+
+    public string Id =>_id;
 
     //[SerializeField] private 
     void Start()
@@ -27,10 +38,10 @@ public class UIWindow : MonoBehaviour
     {
         if (_hideOnStart)
         {
-            Show();
+            Hide(instant: true);
         }
     }
-    public virtual void Show( bool instant = false)
+    public virtual void Show(bool instant = false)
     {
         if (instant)
         {
@@ -39,6 +50,7 @@ public class UIWindow : MonoBehaviour
 
         else
         {
+            _canvasRecTransform.gameObject.SetActive(true);
             RectTransform rectTransform = _canvasGroup.GetComponent<RectTransform>();
             rectTransform.DOScale(Vector3.one, duration: 0.5f).SetEase(Ease.OutBack);
         }
@@ -55,8 +67,13 @@ public class UIWindow : MonoBehaviour
         else
         {
             RectTransform rectTransform = _canvasGroup.GetComponent<RectTransform>();
-            rectTransform.DOScale(Vector3.zero, duration: 0.5f).SetEase(Ease.InBack);
-        }
+            rectTransform.DOScale(Vector3.zero, hideDuration).SetEase(hideEase).OnComplete(() =>
+            {
+                _canvasRecTransform.gameObject.SetActive(false);
+                RectTransform rectTransform = _canvasGroup.GetComponent<RectTransform>();
+                rectTransform.DOScale(Vector3.one, duration: 0.5f).SetEase(Ease.OutBack);
+            });
+         }
     }
 
 
