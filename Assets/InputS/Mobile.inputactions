@@ -1,0 +1,36 @@
+{
+    "version": 1,
+    "name": "Mobile",
+    "maps": [
+        {
+            "name": "Tap",
+            "id": "33fa78ab-1112-4460-b5a7-5e2389a1848b",
+            "actions": [
+                {
+                    "name": "Touch",
+                    "type": "Button",
+                    "id": "6d79ee8e-3f9c-4324-8543-7824a01095a8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1af0ed61-447e-4ea5-adda-cd39f277867c",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Touch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

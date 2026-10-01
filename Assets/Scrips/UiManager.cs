@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class UiManager : MonoBehaviour
 {
+
+    public static UiManager Instance { get; private set; }
     [SerializeField] private List<UIWindow> _uiWindows;
 
    void Start()
@@ -29,4 +31,17 @@ public class UiManager : MonoBehaviour
     {
 
     }
+
+
+    private void Awake()
+    {
+        if( Instance != null && Instance != this )
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(this.gameObject);
+    } 
+
 }
